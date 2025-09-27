@@ -1,0 +1,37 @@
+# PyCharm specific files
+.idea/
+*.iml
+*.iws
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Dependencies
+pip-wheel-metadata/
+.Python
+build/
+dist/
+*.egg-info/
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Other common files to ignore
+*.swp
+*.bak
+*.swo

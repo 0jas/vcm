@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)file:///Users/sajinvachery/Downloads/gitflow_diagram.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitFlow Diagram</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            overflow-x: auto;
+        }
+        
+        .container {
+            width: 1400px;
+            height: 900px;
+            position: relative;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            margin: 0 auto;
+        }
+        
+        .branch-line {
+            position: absolute;
+            height: 4px;
+            border-radius: 2px;
+        }
+        
+        .master-line { background: #2196F3; top: 150px; left: 50px; width: 1300px; }
+        .develop-line { background: #FFC107; top: 250px; left: 50px; width: 1200px; }
+        .feature-line { background: #E91E63; top: 350px; left: 50px; width: 400px; }
+        .release-line { background: #4CAF50; top: 450px; left: 600px; width: 350px; }
+        .hotfix-line { background: #FF5722; top: 645px; left: 800px; width: 300px; }
+        
+        .commit {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .master-commit { background: #2196F3; }
+        .develop-commit { background: #FFC107; }
+        .feature-commit { background: #E91E63; }
+        .release-commit { background: #4CAF50; }
+        .hotfix-commit { background: #FF5722; }
+        
+        .branch-label {
+            position: absolute;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .speech-bubble {
+            position: absolute;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            padding: 12px 16px;
+            font-size: 13px;
+            line-height: 1.4;
+            color: #333;
+            max-width: 180px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+        
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+        }
+        
+        .bubble-bottom::after {
+            border-top-color: white;
+            top: 100%;
+            left: 20px;
+        }
+        
+        .bubble-top::after {
+            border-bottom-color: white;
+            bottom: 100%;
+            left: 20px;
+        }
+        
+        .bubble-left::after {
+            border-right-color: white;
+            right: 100%;
+            top: 20px;
+        }
+        
+        .bubble-right::after {
+            border-left-color: white;
+            left: 100%;
+            top: 20px;
+        }
+        
+        .arrow {
+            position: absolute;
+            stroke: #666;
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arrowhead);
+        }
+        
+        .merge-arrow {
+            stroke: #4CAF50;
+            stroke-width: 3;
+        }
+        
+        .tag {
+            position: absolute;
+            background: #333;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .time-arrow {
+            position: absolute;
+            left: 20px;
+            top: 100px;
+            font-size: 16px;
+            color: #666;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">GitFlow Workflow - Complete Development Cycle</div>
+        
+        <div class="time-arrow">Time →</div>
+        
+        <!-- Branch Lines -->
+        <div class="branch-line master-line"></div>
+        <div class="branch-line develop-line"></div>
+        <div class="branch-line feature-line"></div>
+        <div class="branch-line release-line"></div>
+        <div class="branch-line hotfix-line"></div>
+        
+        <!-- Branch Labels -->
+        <div class="branch-label" style="left: 40px; top: 120px; color: #2196F3;">main</div>
+        <div class="branch-label" style="left: 40px; top: 220px; color: #FFC107;">develop</div>
+        <div class="branch-label" style="left: 40px; top: 320px; color: #E91E63;">feature branches</div>
+        <div class="branch-label" style="left: 530px; top: 420px; color: #4CAF50;">release branches</div>
+        <div class="branch-label" style="left: 710px; top: 615px; color: #FF5722;">hotfix | patch branches</div>
+        
+        <!-- Main Branch Commits -->
+        <div class="commit master-commit" style="left: 140px; top: 140px;"></div>
+        <div class="commit master-commit" style="left: 950px; top: 140px;"></div>
+        <div class="commit master-commit" style="left: 1150px; top: 140px;"></div>
+        
+        <!-- Develop Branch Commits -->
+        <div class="commit develop-commit" style="left: 200px; top: 240px;"></div>
+        <div class="commit develop-commit" style="left: 300px; top: 240px;"></div>
+        <div class="commit develop-commit" style="left: 500px; top: 240px;"></div>
+        <div class="commit develop-commit" style="left: 700px; top: 240px;"></div>
+        <div class="commit develop-commit" style="left: 1000px; top: 240px;"></div>
+        <div class="commit develop-commit" style="left: 1200px; top: 240px;"></div>
+        
+        <!-- Feature Branch Commits -->
+        <div class="commit feature-commit" style="left: 200px; top: 340px;"></div>
+        <div class="commit feature-commit" style="left: 250px; top: 340px;"></div>
+        <div class="commit feature-commit" style="left: 300px; top: 340px;"></div>
+        <div class="commit feature-commit" style="left: 350px; top: 340px;"></div>
+        <div class="commit feature-commit" style="left: 400px; top: 340px;"></div>
+        
+        <!-- Release Branch Commits -->
+        <div class="commit release-commit" style="left: 700px; top: 440px;"></div>
+        <div class="commit release-commit" style="left: 800px; top: 440px;"></div>
+        <div class="commit release-commit" style="left: 900px; top: 440px;"></div>
+        
+        <!-- Hotfix Branch Commits -->
+        <div class="commit hotfix-commit" style="left: 950px; top: 630px;"></div>
+        <div class="commit hotfix-commit" style="left: 1000px; top: 630px;"></div>
+        <div class="commit hotfix-commit" style="left: 1050px; top: 630px;"></div>
+        
+        <!-- Main Branch Tags -->
+        <div class="tag" style="left: 130px; top: 100px;">1.0.0</div>
+        <div class="tag" style="left: 940px; top: 100px;">1.1.0</div>
+        <div class="tag" style="left: 1140px; top: 100px;">1.1.1</div>
+
+        <!-- Develop Branch Tags -->
+        <div class="tag" style="left: 175px; top: 200px;">1.1.0-dev.1</div>
+        <div class="tag" style="left: 275px; top: 200px;">1.1.0-dev.2</div>
+        <div class="tag" style="left: 475px; top: 200px;">1.1.0-dev.3</div>
+        <div class="tag" style="left: 675px; top: 200px;">1.2.0-dev.1</div>
+        <div class="tag" style="left: 975px; top: 200px;">1.2.0-dev.2</div>
+        <div class="tag" style="left: 1175px; top: 200px;">1.2.0-dev.3</div>
+
+        <!-- Release Branch Tags -->
+        <div class="tag" style="left: 675px; top: 470px;">1.1.0-rc.1</div>
+        <div class="tag" style="left: 775px; top: 470px;">1.1.0-rc.2</div>
+        <div class="tag" style="left: 875px; top: 470px;">1.1.0-rc.3</div>
+
+        <!-- Hotfix/Patch Branch Tags -->
+        <div class="tag" style="left: 905px; top: 665px;">1.1.0-patch.1</div>
+        <div class="tag" style="left: 960px; top: 595px;">1.1.0-patch.2</div>
+        <div class="tag" style="left: 1025px; top: 665px;">1.1.0-patch.3</div>
+
+        <!-- Speech Bubbles -->
+        <div class="speech-bubble bubble-bottom" style="left: 120px; top: 10px;">
+            <strong>Initial Release</strong><br>
+            First stable version of the product
+        </div>
+        
+        <div class="speech-bubble bubble-top" style="left: 70px; top: 380px;">
+            <strong>Feature Development</strong><br>
+            New features branch from develop and merge back when complete
+        </div>
+        
+        <div class="speech-bubble bubble-top" style="left: 300px; top: 380px;">
+            <strong>Feature Branch (e.g):</strong><br>
+            • Add login system<br>
+            • Implement user profiles<br>
+            • Add dashboard
+        </div>
+        
+        <div class="speech-bubble bubble-left" style="left: 460px; top: 300px;">
+            <strong>Merge to Develop</strong><br>
+            Feature complete!<br>
+            Code reviewed and tested
+        </div>
+        
+        <div class="speech-bubble bubble-left" style="left: 720px; top: 250px;">
+            <strong>Release Branch</strong><br>
+            • Bug fixes only<br>
+            • Version preparation<br>
+            • Final testing
+        </div>
+        
+        <div class="speech-bubble bubble-right" style="left: 705px; top: 350px;">
+            <strong>Release Ready</strong><br>
+            All features complete, bugs fixed, ready for production
+        </div>
+        
+        <div class="speech-bubble bubble-right" style="left: 770px; top: 520px;">
+            <strong>Hotfix Branch</strong><br>
+            Critical production bug!<br>
+            Quick fix needed
+        </div>
+        
+        <div class="speech-bubble bubble-left" style="left: 1080px; top: 560px;">
+            <strong>Emergency Fix</strong><br>
+            • Fix security vulnerability<br>
+            • Deploy immediately<br>
+            • Merge back to develop
+        </div>
+        
+        <div class="speech-bubble bubble-right" style="left: 990px; top: 80px;">
+            <strong>Hotfix Release</strong><br>
+            Critical fix deployed<br>
+            Version v2.1
+        </div>
+        
+        <!-- SVG for arrows -->
+        <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+            <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#666"></polygon>
+                </marker>
+                <marker id="greenarrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#4CAF50"></polygon>
+                </marker>
+            </defs>
+            
+            <!-- Feature branch creation -->
+            <path d="M 200 250 L 200 350" class="arrow"></path>
+            
+            <!-- Feature branch merge back -->
+            <path d="M 420 350 Q 450 320 510 260" class="merge-arrow" marker-end="url(#greenarrow)"></path>
+            
+            <!-- Release branch creation -->
+            <path d="M 700 250 L 700 450" class="arrow"></path>
+            
+            <!-- Release branch merge to master -->
+            <path d="M 920 450 Q 935 300 950 150" class="merge-arrow" marker-end="url(#greenarrow)"></path>
+            
+            <!-- Release branch merge back to develop -->
+            <path d="M 905 450 Q 950 350 1000 250" class="merge-arrow" marker-end="url(#greenarrow)"></path>
+            
+            <!-- Hotfix branch creation -->
+            <path d="M 950 150 L 950 635" class="arrow"></path>
+            
+            <!-- Hotfix merge to master -->
+            <path d="M 1070 630 Q 1120 350 1150 150" class="merge-arrow" marker-end="url(#greenarrow)"></path>
+            
+            <!-- Hotfix merge to develop -->
+            <path d="M 1050 630 Q 1140 400 1200 250" class="merge-arrow" marker-end="url(#greenarrow)"></path>
+
+        </svg>
+    </div>
+
+</body></html>

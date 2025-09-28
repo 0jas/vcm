@@ -7,6 +7,8 @@ A Python class to manage Git tags following **Semantic Versioning (SemVer)** and
 It provides utilities to create, increment, and validate **development**, **release candidate (RC)**, **patch**, and **production** tags.
 
 ---
+## 📖 Documentation
+📚 [Live Documentation](https://0jas.github.io/vcm/)
 
 ## 🚀 Features
 
@@ -81,7 +83,7 @@ The project follows the Gitflow branching model:
 * **patch | hotfix/** → created from `master`.
 * **master** → production-ready branch.
 
-Below is the **Git Flow diagram**. Click on it to open **HTML** version.
+Below is the **Git Flow diagram**.
 [![alt text](assets/images/GitFlow.png)](assets/html/GitFlow.html)
 ---
 

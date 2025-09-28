@@ -35,6 +35,7 @@ Author: Sajin Vachery
 """
 
 from src.vcm import *
+from src.exceptions import *
 import git, os, sys, shutil, pytest
 
 

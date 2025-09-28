@@ -1,0 +1,2888 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../tests/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Source Code - Version Control Manager(VCM) Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#source-code" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Version Control Manager(VCM) Documentation" class="md-header__button md-logo" aria-label="Version Control Manager(VCM) Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Version Control Manager(VCM) Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Source Code
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Version Control Manager(VCM) Documentation" class="md-nav__button md-logo" aria-label="Version Control Manager(VCM) Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Version Control Manager(VCM) Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Source Code
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Source Code
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#src.vcm" class="md-nav__link">
+    <span class="md-ellipsis">
+      vcm
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.vcm.InvalidTagCreation" class="md-nav__link">
+    <span class="md-ellipsis">
+      InvalidTagCreation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src.vcm.VersionControlManager" class="md-nav__link">
+    <span class="md-ellipsis">
+      VersionControlManager
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VersionControlManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#src.vcm.VersionControlManager.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      __init__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.vcm.VersionControlManager.create_prod_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_prod_tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.vcm.VersionControlManager.find_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      find_tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.vcm.VersionControlManager.find_tag_with_pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      find_tag_with_pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.vcm.VersionControlManager.get_current_rc_patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_current_rc_patch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.vcm.VersionControlManager.get_current_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_current_tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.vcm.VersionControlManager.get_init_rc_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_init_rc_tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.vcm.VersionControlManager.increment_prerelease_tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      increment_prerelease_tag
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.vcm.VersionControlManager.increment_rc_patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      increment_rc_patch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.vcm.VersionControlManager.init_new_patch" class="md-nav__link">
+    <span class="md-ellipsis">
+      init_new_patch
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#src.vcm.VersionControlManager.init_new_rc" class="md-nav__link">
+    <span class="md-ellipsis">
+      init_new_rc
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Test(s)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="source-code">Source Code</h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.vcm"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="src.vcm.InvalidTagCreation" class="doc doc-heading">
+            <code>InvalidTagCreation</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="Exception">Exception</span></code></p>
+
+
+        <p>Custom exception raised when attempting to create an invalid Git tag.</p>
+<p>This exception is used to prevent the creation of tags that would violate
+the versioning rules enforced by the VersionControlManager class.</p>
+
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>src/exceptions.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">InvalidTagCreation</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom exception raised when attempting to create an invalid Git tag.</span>
+
+<span class="sd">    This exception is used to prevent the creation of tags that would violate</span>
+<span class="sd">    the versioning rules enforced by the VersionControlManager class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Do not try to create an INVALID TAG!&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="src.vcm.VersionControlManager" class="doc doc-heading">
+            <code>VersionControlManager</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+
+        <p>A manager class for handling Git tags with semantic versioning.</p>
+<p>This class provides functionality to create, manage, and increment Git tags
+following semantic versioning patterns. It supports development, release candidate,
+patch, and production tags with proper validation and incrementing logic.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="src.vcm.VersionControlManager.repo">repo</span></code></td>
+            <td>
+                  <code><span title="git.Repo">Repo</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The GitPython repository object for the managed repository.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>src/vcm.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">VersionControlManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A manager class for handling Git tags with semantic versioning.</span>
+
+<span class="sd">    This class provides functionality to create, manage, and increment Git tags</span>
+<span class="sd">    following semantic versioning patterns. It supports development, release candidate,</span>
+<span class="sd">    patch, and production tags with proper validation and incrementing logic.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        repo (Repo): The GitPython repository object for the managed repository.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the VersionControlManager with a repository path.</span>
+
+<span class="sd">        If the repository doesn&#39;t exist at the given path, it will be created</span>
+<span class="sd">        and initialized as a new Git repository.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            repo_path (str): The file system path to the Git repository.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">repo_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">repo_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">repo_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="n">repo_path</span><span class="p">)</span>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_init_rc_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate an initial release candidate tag from a prerelease tag.</span>
+
+<span class="sd">        Takes a prerelease tag (e.g., &quot;1.2.3-dev.4&quot;) and converts it to</span>
+<span class="sd">        an initial release candidate tag (e.g., &quot;1.2.3-rc.1&quot;).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tag (str): A prerelease tag in the format &quot;X.Y.Z-prerelease.N&quot;</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The corresponding initial RC tag in format &quot;X.Y.Z-rc.1&quot;</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the tag doesn&#39;t match the expected prerelease pattern.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)-([a-z]+)\.(\d+)$&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+
+        <span class="n">current_tag</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_tag</span><span class="o">.</span><span class="n">major</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">current_tag</span><span class="o">.</span><span class="n">minor</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">current_tag</span><span class="o">.</span><span class="n">patch</span><span class="si">}</span><span class="s2">-rc.1&quot;</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if a specific tag exists in the repository.</span>
+
+<span class="sd">        Performs an exact match search for the given tag name in the repository&#39;s</span>
+<span class="sd">        tag collection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tag (str): The exact tag name to search for.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the tag exists, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^&quot;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;$&quot;</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">tags</span><span class="p">)</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_tag_with_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Find the highest semantic version tag matching a regex pattern.</span>
+
+<span class="sd">        Searches through all repository tags for those matching the given regex pattern,</span>
+<span class="sd">        then returns the highest version according to semantic versioning rules.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pattern (str): Regular expression pattern to match against tag names.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str or None: The highest semantic version tag matching the pattern,</span>
+<span class="sd">                        or None if no matching tags are found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">tags</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span>
+        <span class="n">sorted_tags</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sorted_tags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">sorted_tags</span> <span class="k">else</span> <span class="kc">None</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_current_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span> <span class="n">production</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current highest tag for a specific type (prerelease or production).</span>
+
+<span class="sd">        Retrieves the highest semantic version tag of either production format (X.Y.Z)</span>
+<span class="sd">        or prerelease format (X.Y.Z-prerelease.N) based on the parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            prerelease_tag (str, optional): The prerelease identifier (e.g., &quot;dev&quot;, &quot;rc&quot;).</span>
+<span class="sd">                                          Defaults to &quot;dev&quot;.</span>
+<span class="sd">            production (bool, optional): If True, searches for production tags (X.Y.Z format).</span>
+<span class="sd">                                       If False, searches for prerelease tags. Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str or None: The highest matching tag, or None if no matching tags exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">production</span><span class="p">:</span>
+            <span class="n">dev_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)$&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dev_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)-&quot;</span> <span class="o">+</span> <span class="n">prerelease_tag</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;\.(\d+)$&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_tag_with_pattern</span><span class="p">(</span><span class="n">dev_pattern</span><span class="p">)</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">increment_prerelease_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span> <span class="n">major_bump</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create and increment a prerelease tag.</span>
+
+<span class="sd">        Creates a new prerelease tag by either incrementing an existing tag or starting</span>
+<span class="sd">        a new version sequence. Handles major/minor version bumps when transitioning</span>
+<span class="sd">        from one prerelease to another.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tag (str, optional): Base tag to increment from. If None, starts with &quot;0.1.0-dev.1&quot;.</span>
+<span class="sd">            prerelease_tag (str, optional): The prerelease identifier. Defaults to &quot;dev&quot;.</span>
+<span class="sd">            major_bump (bool, optional): If True, performs a major version bump instead of minor.</span>
+<span class="sd">                                       Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The newly created prerelease tag.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the provided tag doesn&#39;t match the expected prerelease pattern.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)-([a-z]+)\.(\d+)$&quot;</span>
+        <span class="k">if</span> <span class="n">tag</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">tag</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_tag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_init_rc_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">major_bump</span><span class="p">:</span>
+                    <span class="n">next_tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">bump_major</span><span class="p">()</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">prerelease_tag</span><span class="si">}</span><span class="s2">.1&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">next_tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">bump_minor</span><span class="p">()</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">prerelease_tag</span><span class="si">}</span><span class="s2">.1&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">next_tag</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">bump_prerelease</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">next_tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;0.1.0-</span><span class="si">{</span><span class="n">prerelease_tag</span><span class="si">}</span><span class="s2">.1&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">create_tag</span><span class="p">(</span><span class="n">next_tag</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">next_tag</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_new_rc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;dev&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a new release candidate from the current development tag.</span>
+
+<span class="sd">        Creates the first release candidate tag (X.Y.Z-rc.1) based on the highest</span>
+<span class="sd">        existing development tag. The RC tag points to the same commit as the dev tag.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            prerelease_tag (str, optional): The development prerelease identifier.</span>
+<span class="sd">                                          Defaults to &quot;dev&quot;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str or None: The newly created RC tag name, or None if no development</span>
+<span class="sd">                        tag exists to base the RC on.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_dev_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_tag</span><span class="p">(</span><span class="n">prerelease_tag</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">current_dev_tag</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">current_dev_tag</span><span class="p">)</span>
+            <span class="n">init_release_tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">major</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">minor</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">patch</span><span class="si">}</span><span class="s2">-rc.1&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">create_tag</span><span class="p">(</span>
+                <span class="n">init_release_tag</span><span class="p">,</span>
+                <span class="n">ref</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">current_dev_tag</span><span class="p">),</span>
+                <span class="n">message</span><span class="o">=</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Release candidate version: </span><span class="si">{</span><span class="n">init_release_tag</span><span class="si">}</span><span class="s2"> &quot;</span> 
+                    <span class="sa">f</span><span class="s2">&quot;created from Development version: </span><span class="si">{</span><span class="n">current_dev_tag</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">init_release_tag</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_new_patch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a new patch prerelease from the current production tag.</span>
+
+<span class="sd">        Creates the first patch prerelease tag (X.Y.Z-patch.1) based on the highest</span>
+<span class="sd">        existing production tag. The patch tag points to the same commit as the production tag.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str or None: The newly created patch tag name, or None if no production</span>
+<span class="sd">                        tag exists to base the patch on.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_prod</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_tag</span><span class="p">(</span><span class="n">production</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">current_prod</span><span class="p">:</span>
+            <span class="n">init_patch_tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_prod</span><span class="si">}</span><span class="s2">-patch.1&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">create_tag</span><span class="p">(</span>
+                <span class="n">init_patch_tag</span><span class="p">,</span>
+                <span class="n">ref</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">current_prod</span><span class="p">),</span>
+                <span class="n">message</span><span class="o">=</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Patch version: </span><span class="si">{</span><span class="n">init_patch_tag</span><span class="si">}</span><span class="s2"> &quot;</span> 
+                    <span class="sa">f</span><span class="s2">&quot;created from Production version: </span><span class="si">{</span><span class="n">current_prod</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">init_patch_tag</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_current_rc_patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;rc&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current highest RC or patch tag for a given base version.</span>
+
+<span class="sd">        Finds the highest prerelease tag (rc or patch) that corresponds to the given</span>
+<span class="sd">        base production version tag.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tag (str): Base production version tag in format &quot;X.Y.Z&quot;.</span>
+<span class="sd">            prerelease_tag (str, optional): The prerelease type (&quot;rc&quot; or &quot;patch&quot;).</span>
+<span class="sd">                                           Defaults to &quot;rc&quot;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str or None: The highest matching prerelease tag, or None if none exist.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the base tag doesn&#39;t match the production version pattern.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)$&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+
+        <span class="n">rc_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^&quot;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">prerelease_tag</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;\.(\d+)$&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_tag_with_pattern</span><span class="p">(</span><span class="n">rc_pattern</span><span class="p">)</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">increment_rc_patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;rc&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Increment a release candidate or patch prerelease tag.</span>
+
+<span class="sd">        Creates the next RC or patch prerelease tag for a given base version.</span>
+<span class="sd">        Includes validation to ensure proper versioning rules are followed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tag (str): Base production version tag in format &quot;X.Y.Z&quot;.</span>
+<span class="sd">            prerelease_tag (str, optional): The prerelease type (&quot;rc&quot; or &quot;patch&quot;).</span>
+<span class="sd">                                           Defaults to &quot;rc&quot;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str or None: The newly created incremented tag, or None if no base</span>
+<span class="sd">                        prerelease tag exists to increment.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the base tag doesn&#39;t match the production version pattern.</span>
+<span class="sd">            InvalidTagCreation: If attempting to create an RC when production version</span>
+<span class="sd">                              exists, or attempting to create a patch when production</span>
+<span class="sd">                              version doesn&#39;t exist, or when a patch already exists</span>
+<span class="sd">                              in production.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)$&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+
+        <span class="k">if</span>  <span class="n">prerelease_tag</span> <span class="o">==</span> <span class="s2">&quot;rc&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">InvalidTagCreation</span><span class="p">(</span>
+                <span class="s2">&quot;Production version available. Cannot create Release Candidate version!&quot;</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">prerelease_tag</span> <span class="o">==</span> <span class="s2">&quot;patch&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">InvalidTagCreation</span><span class="p">(</span>
+                <span class="s2">&quot;Production version not available. Cannot create Patch version!&quot;</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">prerelease_tag</span> <span class="o">==</span> <span class="s2">&quot;rc&quot;</span><span class="p">:</span>
+            <span class="n">current_rc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_rc_patch</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">prerelease_tag</span> <span class="o">==</span> <span class="s2">&quot;patch&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_tag</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">bump_patch</span><span class="p">())):</span>
+                <span class="k">raise</span> <span class="n">InvalidTagCreation</span><span class="p">(</span>
+                    <span class="s2">&quot;Cannot increment Patch pre-release version. Patch found in Production.&quot;</span>
+                <span class="p">)</span>
+            <span class="n">current_rc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_rc_patch</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s2">&quot;patch&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">current_rc</span><span class="p">:</span>
+            <span class="n">new_rc_tag</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">current_rc</span><span class="p">)</span><span class="o">.</span><span class="n">bump_prerelease</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">create_tag</span><span class="p">(</span><span class="n">new_rc_tag</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">new_rc_tag</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_prod_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a production tag from a release candidate or patch prerelease.</span>
+
+<span class="sd">        Converts an RC or patch prerelease tag into a production version tag.</span>
+<span class="sd">        For RC tags, creates the base version (X.Y.Z). For patch tags, creates</span>
+<span class="sd">        the next patch version (X.Y.Z+1).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tag (str): The RC or patch prerelease tag to promote to production.</span>
+<span class="sd">                      Format: &quot;X.Y.Z-rc.N&quot; or &quot;X.Y.Z-patch.N&quot;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The newly created production tag.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the tag doesn&#39;t match the expected RC or patch pattern.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)-(rc|patch)\.(\d+)$&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;patch&quot;</span><span class="p">:</span>
+            <span class="n">new_prod_tag</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">bump_patch</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+            <span class="n">new_prod_tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">major</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">minor</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">patch</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">create_tag</span><span class="p">(</span>
+            <span class="n">new_prod_tag</span><span class="p">,</span>
+            <span class="n">ref</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">tag</span><span class="p">),</span>
+            <span class="n">message</span><span class="o">=</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Production version: </span><span class="si">{</span><span class="n">new_prod_tag</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;created from (Release Candidate | Patch) version: </span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_prod_tag</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.vcm.VersionControlManager.__init__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">repo_path</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initialize the VersionControlManager with a repository path.</p>
+<p>If the repository doesn't exist at the given path, it will be created
+and initialized as a new Git repository.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>repo_path</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The file system path to the Git repository.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/vcm.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the VersionControlManager with a repository path.</span>
+
+<span class="sd">    If the repository doesn&#39;t exist at the given path, it will be created</span>
+<span class="sd">    and initialized as a new Git repository.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        repo_path (str): The file system path to the Git repository.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">repo_path</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">repo_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">repo_path</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="n">repo_path</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.vcm.VersionControlManager.create_prod_tag" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">create_prod_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Create a production tag from a release candidate or patch prerelease.</p>
+<p>Converts an RC or patch prerelease tag into a production version tag.
+For RC tags, creates the base version (X.Y.Z). For patch tags, creates
+the next patch version (X.Y.Z+1).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>tag</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The RC or patch prerelease tag to promote to production.
+      Format: "X.Y.Z-rc.N" or "X.Y.Z-patch.N".</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>str</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The newly created production tag.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If the tag doesn't match the expected RC or patch pattern.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/vcm.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">create_prod_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a production tag from a release candidate or patch prerelease.</span>
+
+<span class="sd">    Converts an RC or patch prerelease tag into a production version tag.</span>
+<span class="sd">    For RC tags, creates the base version (X.Y.Z). For patch tags, creates</span>
+<span class="sd">    the next patch version (X.Y.Z+1).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tag (str): The RC or patch prerelease tag to promote to production.</span>
+<span class="sd">                  Format: &quot;X.Y.Z-rc.N&quot; or &quot;X.Y.Z-patch.N&quot;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The newly created production tag.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the tag doesn&#39;t match the expected RC or patch pattern.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)-(rc|patch)\.(\d+)$&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
+
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;patch&quot;</span><span class="p">:</span>
+        <span class="n">new_prod_tag</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">bump_patch</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+        <span class="n">new_prod_tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">major</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">minor</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">patch</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">create_tag</span><span class="p">(</span>
+        <span class="n">new_prod_tag</span><span class="p">,</span>
+        <span class="n">ref</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">tag</span><span class="p">),</span>
+        <span class="n">message</span><span class="o">=</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Production version: </span><span class="si">{</span><span class="n">new_prod_tag</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;created from (Release Candidate | Patch) version: </span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_prod_tag</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.vcm.VersionControlManager.find_tag" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">find_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Check if a specific tag exists in the repository.</p>
+<p>Performs an exact match search for the given tag name in the repository's
+tag collection.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>tag</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The exact tag name to search for.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>bool</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True if the tag exists, False otherwise.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/vcm.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if a specific tag exists in the repository.</span>
+
+<span class="sd">    Performs an exact match search for the given tag name in the repository&#39;s</span>
+<span class="sd">    tag collection.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tag (str): The exact tag name to search for.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if the tag exists, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^&quot;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;$&quot;</span>
+    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">tags</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.vcm.VersionControlManager.find_tag_with_pattern" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">find_tag_with_pattern</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Find the highest semantic version tag matching a regex pattern.</p>
+<p>Searches through all repository tags for those matching the given regex pattern,
+then returns the highest version according to semantic versioning rules.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>pattern</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Regular expression pattern to match against tag names.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>str or None: The highest semantic version tag matching the pattern,
+        or None if no matching tags are found.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/vcm.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find_tag_with_pattern</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find the highest semantic version tag matching a regex pattern.</span>
+
+<span class="sd">    Searches through all repository tags for those matching the given regex pattern,</span>
+<span class="sd">    then returns the highest version according to semantic versioning rules.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pattern (str): Regular expression pattern to match against tag names.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str or None: The highest semantic version tag matching the pattern,</span>
+<span class="sd">                    or None if no matching tags are found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">tags</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span>
+    <span class="n">sorted_tags</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sorted_tags</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">sorted_tags</span> <span class="k">else</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.vcm.VersionControlManager.get_current_rc_patch" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_current_rc_patch</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="o">=</span><span class="s1">&#39;rc&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get the current highest RC or patch tag for a given base version.</p>
+<p>Finds the highest prerelease tag (rc or patch) that corresponds to the given
+base production version tag.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>tag</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Base production version tag in format "X.Y.Z".</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>prerelease_tag</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The prerelease type ("rc" or "patch").
+                           Defaults to "rc".</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;rc&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>str or None: The highest matching prerelease tag, or None if none exist.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If the base tag doesn't match the production version pattern.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/vcm.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_current_rc_patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;rc&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the current highest RC or patch tag for a given base version.</span>
+
+<span class="sd">    Finds the highest prerelease tag (rc or patch) that corresponds to the given</span>
+<span class="sd">    base production version tag.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tag (str): Base production version tag in format &quot;X.Y.Z&quot;.</span>
+<span class="sd">        prerelease_tag (str, optional): The prerelease type (&quot;rc&quot; or &quot;patch&quot;).</span>
+<span class="sd">                                       Defaults to &quot;rc&quot;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str or None: The highest matching prerelease tag, or None if none exist.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the base tag doesn&#39;t match the production version pattern.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)$&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
+
+    <span class="n">rc_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^&quot;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">prerelease_tag</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;\.(\d+)$&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_tag_with_pattern</span><span class="p">(</span><span class="n">rc_pattern</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.vcm.VersionControlManager.get_current_tag" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_current_tag</span><span class="p">(</span><span class="n">prerelease_tag</span><span class="o">=</span><span class="s1">&#39;dev&#39;</span><span class="p">,</span> <span class="n">production</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Get the current highest tag for a specific type (prerelease or production).</p>
+<p>Retrieves the highest semantic version tag of either production format (X.Y.Z)
+or prerelease format (X.Y.Z-prerelease.N) based on the parameters.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>prerelease_tag</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The prerelease identifier (e.g., "dev", "rc").
+                          Defaults to "dev".</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;dev&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>production</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If True, searches for production tags (X.Y.Z format).
+                       If False, searches for prerelease tags. Defaults to False.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>str or None: The highest matching tag, or None if no matching tags exist.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/vcm.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_current_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span> <span class="n">production</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the current highest tag for a specific type (prerelease or production).</span>
+
+<span class="sd">    Retrieves the highest semantic version tag of either production format (X.Y.Z)</span>
+<span class="sd">    or prerelease format (X.Y.Z-prerelease.N) based on the parameters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        prerelease_tag (str, optional): The prerelease identifier (e.g., &quot;dev&quot;, &quot;rc&quot;).</span>
+<span class="sd">                                      Defaults to &quot;dev&quot;.</span>
+<span class="sd">        production (bool, optional): If True, searches for production tags (X.Y.Z format).</span>
+<span class="sd">                                   If False, searches for prerelease tags. Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str or None: The highest matching tag, or None if no matching tags exist.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">production</span><span class="p">:</span>
+        <span class="n">dev_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)$&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dev_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)-&quot;</span> <span class="o">+</span> <span class="n">prerelease_tag</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;\.(\d+)$&quot;</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_tag_with_pattern</span><span class="p">(</span><span class="n">dev_pattern</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.vcm.VersionControlManager.get_init_rc_tag" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_init_rc_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Generate an initial release candidate tag from a prerelease tag.</p>
+<p>Takes a prerelease tag (e.g., "1.2.3-dev.4") and converts it to
+an initial release candidate tag (e.g., "1.2.3-rc.1").</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>tag</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A prerelease tag in the format "X.Y.Z-prerelease.N"</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>str</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The corresponding initial RC tag in format "X.Y.Z-rc.1"</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If the tag doesn't match the expected prerelease pattern.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/vcm.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_init_rc_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate an initial release candidate tag from a prerelease tag.</span>
+
+<span class="sd">    Takes a prerelease tag (e.g., &quot;1.2.3-dev.4&quot;) and converts it to</span>
+<span class="sd">    an initial release candidate tag (e.g., &quot;1.2.3-rc.1&quot;).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tag (str): A prerelease tag in the format &quot;X.Y.Z-prerelease.N&quot;</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The corresponding initial RC tag in format &quot;X.Y.Z-rc.1&quot;</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the tag doesn&#39;t match the expected prerelease pattern.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)-([a-z]+)\.(\d+)$&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
+
+    <span class="n">current_tag</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_tag</span><span class="o">.</span><span class="n">major</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">current_tag</span><span class="o">.</span><span class="n">minor</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">current_tag</span><span class="o">.</span><span class="n">patch</span><span class="si">}</span><span class="s2">-rc.1&quot;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.vcm.VersionControlManager.increment_prerelease_tag" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">increment_prerelease_tag</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="o">=</span><span class="s1">&#39;dev&#39;</span><span class="p">,</span> <span class="n">major_bump</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Create and increment a prerelease tag.</p>
+<p>Creates a new prerelease tag by either incrementing an existing tag or starting
+a new version sequence. Handles major/minor version bumps when transitioning
+from one prerelease to another.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>tag</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Base tag to increment from. If None, starts with "0.1.0-dev.1".</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>prerelease_tag</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The prerelease identifier. Defaults to "dev".</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;dev&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>major_bump</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If True, performs a major version bump instead of minor.
+                       Defaults to False.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>str</code></td>            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The newly created prerelease tag.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If the provided tag doesn't match the expected prerelease pattern.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/vcm.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">increment_prerelease_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span> <span class="n">major_bump</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create and increment a prerelease tag.</span>
+
+<span class="sd">    Creates a new prerelease tag by either incrementing an existing tag or starting</span>
+<span class="sd">    a new version sequence. Handles major/minor version bumps when transitioning</span>
+<span class="sd">    from one prerelease to another.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tag (str, optional): Base tag to increment from. If None, starts with &quot;0.1.0-dev.1&quot;.</span>
+<span class="sd">        prerelease_tag (str, optional): The prerelease identifier. Defaults to &quot;dev&quot;.</span>
+<span class="sd">        major_bump (bool, optional): If True, performs a major version bump instead of minor.</span>
+<span class="sd">                                   Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The newly created prerelease tag.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the provided tag doesn&#39;t match the expected prerelease pattern.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)-([a-z]+)\.(\d+)$&quot;</span>
+    <span class="k">if</span> <span class="n">tag</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">tag</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_tag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_init_rc_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">major_bump</span><span class="p">:</span>
+                <span class="n">next_tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">bump_major</span><span class="p">()</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">prerelease_tag</span><span class="si">}</span><span class="s2">.1&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">next_tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">bump_minor</span><span class="p">()</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">prerelease_tag</span><span class="si">}</span><span class="s2">.1&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">next_tag</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">bump_prerelease</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">next_tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;0.1.0-</span><span class="si">{</span><span class="n">prerelease_tag</span><span class="si">}</span><span class="s2">.1&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">create_tag</span><span class="p">(</span><span class="n">next_tag</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">next_tag</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.vcm.VersionControlManager.increment_rc_patch" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">increment_rc_patch</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="o">=</span><span class="s1">&#39;rc&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Increment a release candidate or patch prerelease tag.</p>
+<p>Creates the next RC or patch prerelease tag for a given base version.
+Includes validation to ensure proper versioning rules are followed.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>tag</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Base production version tag in format "X.Y.Z".</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>prerelease_tag</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The prerelease type ("rc" or "patch").
+                           Defaults to "rc".</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;rc&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>str or None: The newly created incremented tag, or None if no base
+        prerelease tag exists to increment.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If the base tag doesn't match the production version pattern.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="InvalidTagCreation (src.exceptions.InvalidTagCreation)" href="#src.vcm.InvalidTagCreation">InvalidTagCreation</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If attempting to create an RC when production version
+              exists, or attempting to create a patch when production
+              version doesn't exist, or when a patch already exists
+              in production.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/vcm.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">increment_rc_patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;rc&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Increment a release candidate or patch prerelease tag.</span>
+
+<span class="sd">    Creates the next RC or patch prerelease tag for a given base version.</span>
+<span class="sd">    Includes validation to ensure proper versioning rules are followed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tag (str): Base production version tag in format &quot;X.Y.Z&quot;.</span>
+<span class="sd">        prerelease_tag (str, optional): The prerelease type (&quot;rc&quot; or &quot;patch&quot;).</span>
+<span class="sd">                                       Defaults to &quot;rc&quot;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str or None: The newly created incremented tag, or None if no base</span>
+<span class="sd">                    prerelease tag exists to increment.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the base tag doesn&#39;t match the production version pattern.</span>
+<span class="sd">        InvalidTagCreation: If attempting to create an RC when production version</span>
+<span class="sd">                          exists, or attempting to create a patch when production</span>
+<span class="sd">                          version doesn&#39;t exist, or when a patch already exists</span>
+<span class="sd">                          in production.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^(\d+)\.(\d+)\.(\d+)$&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
+
+    <span class="k">if</span>  <span class="n">prerelease_tag</span> <span class="o">==</span> <span class="s2">&quot;rc&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">InvalidTagCreation</span><span class="p">(</span>
+            <span class="s2">&quot;Production version available. Cannot create Release Candidate version!&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">prerelease_tag</span> <span class="o">==</span> <span class="s2">&quot;patch&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">InvalidTagCreation</span><span class="p">(</span>
+            <span class="s2">&quot;Production version not available. Cannot create Patch version!&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">prerelease_tag</span> <span class="o">==</span> <span class="s2">&quot;rc&quot;</span><span class="p">:</span>
+        <span class="n">current_rc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_rc_patch</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">prerelease_tag</span> <span class="o">==</span> <span class="s2">&quot;patch&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_tag</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">bump_patch</span><span class="p">())):</span>
+            <span class="k">raise</span> <span class="n">InvalidTagCreation</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot increment Patch pre-release version. Patch found in Production.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">current_rc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_rc_patch</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s2">&quot;patch&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">current_rc</span><span class="p">:</span>
+        <span class="n">new_rc_tag</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">current_rc</span><span class="p">)</span><span class="o">.</span><span class="n">bump_prerelease</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">create_tag</span><span class="p">(</span><span class="n">new_rc_tag</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_rc_tag</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.vcm.VersionControlManager.init_new_patch" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">init_new_patch</span><span class="p">()</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initialize a new patch prerelease from the current production tag.</p>
+<p>Creates the first patch prerelease tag (X.Y.Z-patch.1) based on the highest
+existing production tag. The patch tag points to the same commit as the production tag.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>str or None: The newly created patch tag name, or None if no production
+        tag exists to base the patch on.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/vcm.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">init_new_patch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize a new patch prerelease from the current production tag.</span>
+
+<span class="sd">    Creates the first patch prerelease tag (X.Y.Z-patch.1) based on the highest</span>
+<span class="sd">    existing production tag. The patch tag points to the same commit as the production tag.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str or None: The newly created patch tag name, or None if no production</span>
+<span class="sd">                    tag exists to base the patch on.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">current_prod</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_tag</span><span class="p">(</span><span class="n">production</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">current_prod</span><span class="p">:</span>
+        <span class="n">init_patch_tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_prod</span><span class="si">}</span><span class="s2">-patch.1&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">create_tag</span><span class="p">(</span>
+            <span class="n">init_patch_tag</span><span class="p">,</span>
+            <span class="n">ref</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">current_prod</span><span class="p">),</span>
+            <span class="n">message</span><span class="o">=</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Patch version: </span><span class="si">{</span><span class="n">init_patch_tag</span><span class="si">}</span><span class="s2"> &quot;</span> 
+                <span class="sa">f</span><span class="s2">&quot;created from Production version: </span><span class="si">{</span><span class="n">current_prod</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">init_patch_tag</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="src.vcm.VersionControlManager.init_new_rc" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">init_new_rc</span><span class="p">(</span><span class="n">prerelease_tag</span><span class="o">=</span><span class="s1">&#39;dev&#39;</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initialize a new release candidate from the current development tag.</p>
+<p>Creates the first release candidate tag (X.Y.Z-rc.1) based on the highest
+existing development tag. The RC tag points to the same commit as the dev tag.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>prerelease_tag</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The development prerelease identifier.
+                          Defaults to "dev".</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;dev&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>str or None: The newly created RC tag name, or None if no development
+        tag exists to base the RC on.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>src/vcm.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">init_new_rc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prerelease_tag</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;dev&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize a new release candidate from the current development tag.</span>
+
+<span class="sd">    Creates the first release candidate tag (X.Y.Z-rc.1) based on the highest</span>
+<span class="sd">    existing development tag. The RC tag points to the same commit as the dev tag.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        prerelease_tag (str, optional): The development prerelease identifier.</span>
+<span class="sd">                                      Defaults to &quot;dev&quot;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str or None: The newly created RC tag name, or None if no development</span>
+<span class="sd">                    tag exists to base the RC on.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">current_dev_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_tag</span><span class="p">(</span><span class="n">prerelease_tag</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">current_dev_tag</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">semver</span><span class="o">.</span><span class="n">VersionInfo</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">current_dev_tag</span><span class="p">)</span>
+        <span class="n">init_release_tag</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">major</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">minor</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">patch</span><span class="si">}</span><span class="s2">-rc.1&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">create_tag</span><span class="p">(</span>
+            <span class="n">init_release_tag</span><span class="p">,</span>
+            <span class="n">ref</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">current_dev_tag</span><span class="p">),</span>
+            <span class="n">message</span><span class="o">=</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Release candidate version: </span><span class="si">{</span><span class="n">init_release_tag</span><span class="si">}</span><span class="s2"> &quot;</span> 
+                <span class="sa">f</span><span class="s2">&quot;created from Development version: </span><span class="si">{</span><span class="n">current_dev_tag</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">init_release_tag</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.sections", "toc.integrate"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -35,3 +35,5 @@ Thumbs.db
 *.swp
 *.bak
 *.swo
+/tests/.pytest_cache/
+/.pytest_cache/

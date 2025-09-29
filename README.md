@@ -79,9 +79,9 @@ The project follows the Gitflow branching model:
 
 * **develop** → main integration branch.
 * **feature/** branches → branched from `develop`.
-* **release/** → created from `develop`, leads to `master`.
-* **patch | hotfix/** → created from `master`.
-* **master** → production-ready branch.
+* **release/** → created from `develop`, leads to `main`.
+* **patch | hotfix/** → created from `main`.
+* **main** → production-ready branch.
 
 Below is the **Git Flow diagram**.
 [![alt text](assets/images/GitFlow.png)](assets/html/GitFlow.html)
@@ -92,8 +92,8 @@ Below is the **Git Flow diagram**.
 1. Developer creates a **feature branch** from `develop`.
 2. Feature branch merges back into `develop`.
 3. A **release branch** is created from `develop`.
-4. Release is tested, then merged into `master` (production) and `develop`.
-5. **Hotfix branches** can be created from `master` and merged back into both `master` and `develop`.
+4. Release is tested, then merged into `main` (production) and `develop`.
+5. **Hotfix branches** can be created from `main` and merged back into both `main` and `develop`.
 
 ---
 

@@ -43,12 +43,8 @@ It provides utilities to create, increment, and validate **development**, **rele
 - [Gitflow Diagram](#-gitflow-diagram)
 - [Example Workflow](#-example-workflow)
 - [CLI Command Reference](#-cli-command-reference)
-- [API Reference](#-api-reference)
-- [setup.py Configuration](#-setuppy-configuration)
 - [Tests](#-tests)
 - [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
-- [License](#-license)
 
 ---
 

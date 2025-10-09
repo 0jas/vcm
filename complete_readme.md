@@ -1554,7 +1554,3 @@ SOFTWARE.
 ![GitHub forks](https://img.shields.io/github/forks/0jas/vcm?style=social)
 ![GitHub issues](https://img.shields.io/github/issues/0jas/vcm)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/0jas/vcm)
-
----
-
-**Made with ❤️ by developers, for developers**

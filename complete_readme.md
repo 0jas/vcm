@@ -28,7 +28,6 @@ It provides utilities to create, increment, and validate **development**, **rele
   - Prevents patch creation if no production tag exists
   - Validates semantic versioning format
 - ✅ **Command-line interface**: Easy-to-use CLI for automation and CI/CD
-- ✅ **Python API**: Full programmatic access for integration
 
 ---
 
@@ -187,27 +186,6 @@ pip install dist/vcm-<version>.tar.gz
 ```bash
 # Install in editable/development mode
 pip install -e .
-```
-
-### Publishing to PyPI
-
-After building distributions, publish to PyPI:
-
-```bash
-# Install twine for uploading
-pip install twine
-
-# Check distribution files
-twine check dist/*
-
-# Upload to Test PyPI (recommended first)
-python -m twine upload --repository testpypi dist/*
-
-# Upload to Production PyPI
-python -m twine upload dist/*
-
-# Then users can install with:
-# pip install vcm
 ```
 
 ### Cleaning Build Artifacts
@@ -574,7 +552,7 @@ develop (integration)
 
 [![Git Flow Diagram](assets/images/GitFlow.png)](assets/html/GitFlow.html)
 
-Click the diagram for an interactive HTML version.
+[//]: # (Click the diagram for an interactive HTML version.)
 
 ---
 
@@ -624,50 +602,6 @@ vcm increment-rc-patch --tag 0.1.0 --prerelease-tag patch
 # 9. Deploy hotfix to production
 vcm create-prod --tag 0.1.0-patch.2
 # Output: 0.1.1 (increments patch version)
-```
-
-### Gitflow Branch Workflow
-
-```bash
-# On develop branch
-git checkout develop
-vcm increment-prerelease
-git add .
-git commit -m "feat: new feature"
-
-# Create release branch
-git checkout -b release/0.1.0
-vcm init-rc
-git add .
-git commit -m "chore: prepare release 0.1.0-rc.1"
-
-# After testing, merge to master
-git checkout master
-git merge --no-ff release/0.1.0
-vcm create-prod 0.1.0-rc.1
-git tag 0.1.0
-git push origin master --tags
-
-# Merge back to develop
-git checkout develop
-git merge --no-ff release/0.1.0
-git push origin develop
-
-# For hotfix
-git checkout master
-git checkout -b hotfix/0.1.1
-vcm init-patch
-# ... make fixes ...
-vcm create-prod 0.1.0-patch.1
-git checkout master
-git merge --no-ff hotfix/0.1.1
-git tag 0.1.1
-git push origin master --tags
-
-# Merge hotfix back to develop
-git checkout develop
-git merge --no-ff hotfix/0.1.1
-git push origin develop
 ```
 
 ---
@@ -776,21 +710,19 @@ Get the current highest RC or patch tag for a version.
 
 **Usage:**
 ```bash
-vcm get-current-rc-patch TAG [OPTIONS]
+vcm get-current-rc-patch --tag TAG [OPTIONS]
 ```
 
-**Arguments:**
-- `TAG` - Base production version tag (e.g., `1.0.0`)
-
 **Options:**
+- `--tag TAG` - Base production version tag (e.g., `1.0.0`)
 - `--repo-path PATH` - Path to Git repository (default: current directory)
 - `--prerelease-tag TAG` - Prerelease type: `rc` or `patch` (default: `rc`)
 
 **Examples:**
 ```bash
-vcm get-current-rc-patch 1.0.0
-vcm get-current-rc-patch 1.0.0 --prerelease-tag patch
-vcm get-current-rc-patch 1.0.0 --repo-path /path/to/repo
+vcm get-current-rc-patch --tag 1.0.0
+vcm get-current-rc-patch --tag 1.0.0 --prerelease-tag patch
+vcm get-current-rc-patch --tag 1.0.0 --repo-path /path/to/repo
 ```
 
 ---
@@ -801,22 +733,20 @@ Increment a release candidate or patch prerelease tag.
 
 **Usage:**
 ```bash
-vcm increment-rc-patch TAG [OPTIONS]
+vcm increment-rc-patch --tag TAG [OPTIONS]
 ```
 
-**Arguments:**
-- `TAG` - Base production version tag (e.g., `1.0.0`)
-
 **Options:**
+- `--tag TAG` - Base production version tag (e.g., `1.0.0`)
 - `--repo-path PATH` - Path to Git repository (default: current directory)
 - `--prerelease-tag TAG` - Prerelease type: `rc` or `patch` (default: `rc`)
 - `-d, --detailed` - Show descriptive message
 
 **Examples:**
 ```bash
-vcm increment-rc-patch 1.0.0
-vcm increment-rc-patch 1.0.0 --prerelease-tag patch
-vcm increment-rc-patch 1.0.0 --detailed
+vcm increment-rc-patch --tag 1.0.0
+vcm increment-rc-patch --tag 1.0.0 --prerelease-tag patch
+vcm increment-rc-patch --tag 1.0.0 --detailed
 ```
 
 ---
@@ -830,254 +760,16 @@ Create a production tag from RC or patch prerelease.
 vcm create-prod TAG [OPTIONS]
 ```
 
-**Arguments:**
-- `TAG` - RC or patch prerelease tag to promote (e.g., `1.0.0-rc.3`)
-
 **Options:**
+- `--tag TAG` - RC or patch prerelease tag to promote (e.g., `1.0.0-rc.3`)
 - `--repo-path PATH` - Path to Git repository (default: current directory)
 - `-d, --detailed` - Show descriptive message
 
 **Examples:**
 ```bash
-vcm create-prod 1.0.0-rc.3
-vcm create-prod 1.0.0-patch.2
-vcm create-prod 1.0.0-rc.3 --detailed
-```
-
----
-
-## 📚 API Reference
-
-### Class: `VersionControlManager`
-
-Main class for managing Git tags with semantic versioning.
-
-#### `__init__(repo_path: str = ".")`
-
-Initialize the VersionControlManager.
-
-**Parameters:**
-- `repo_path` (str): Path to Git repository. Defaults to current directory.
-
-**Raises:**
-- `InvalidGitRepositoryError`: If path is not a valid Git repository.
-
----
-
-#### `get_current_tag(prerelease_tag: str = "dev", production: bool = False) -> str | None`
-
-Get the current highest tag for a specific type.
-
-**Parameters:**
-- `prerelease_tag` (str): Prerelease identifier (e.g., "dev", "rc", "alpha")
-- `production` (bool): If True, returns production tags only
-
-**Returns:**
-- `str | None`: Highest matching tag or None if no tags exist
-
-**Example:**
-```python
-manager.get_current_tag()  # Returns: "1.0.0-dev.5"
-manager.get_current_tag(production=True)  # Returns: "1.0.0"
-```
-
----
-
-#### `increment_prerelease_tag(tag: str = None, prerelease_tag: str = "dev", major_bump: bool = False) -> str`
-
-Create and increment a prerelease tag.
-
-**Parameters:**
-- `tag` (str, optional): Base tag to increment. If None, uses current tag.
-- `prerelease_tag` (str): Prerelease identifier
-- `major_bump` (bool): If True, performs major version bump
-
-**Returns:**
-- `str`: Newly created tag
-
-**Raises:**
-- `ValueError`: If tag format is invalid
-
-**Example:**
-```python
-manager.increment_prerelease_tag()  # Returns: "1.1.0-dev.1"
-manager.increment_prerelease_tag("1.0.0-dev.5")  # Returns: "1.0.0-dev.6"
-manager.increment_prerelease_tag("1.0.0-dev.5", major_bump=True)  # Returns: "2.0.0-dev.1"
-```
-
----
-
-#### `init_new_rc(prerelease_tag: str = "dev") -> str | None`
-
-Initialize a new release candidate from current development tag.
-
-**Parameters:**
-- `prerelease_tag` (str): Development prerelease identifier
-
-**Returns:**
-- `str | None`: New RC tag or None if no dev tag exists
-
-**Example:**
-```python
-manager.init_new_rc()  # Returns: "1.0.0-rc.1"
-```
-
----
-
-#### `init_new_patch() -> str | None`
-
-Initialize a new patch prerelease from current production tag.
-
-**Returns:**
-- `str | None`: New patch tag or None if no production tag exists
-
-**Example:**
-```python
-manager.init_new_patch()  # Returns: "1.0.0-patch.1"
-```
-
----
-
-#### `get_current_rc_patch(tag: str, prerelease_tag: str = "rc") -> str | None`
-
-Get the current highest RC or patch tag for a version.
-
-**Parameters:**
-- `tag` (str): Base production version (e.g., "1.0.0")
-- `prerelease_tag` (str): Prerelease type ("rc" or "patch")
-
-**Returns:**
-- `str | None`: Highest RC/patch tag or None
-
-**Raises:**
-- `ValueError`: If tag format is invalid
-
-**Example:**
-```python
-manager.get_current_rc_patch("1.0.0")  # Returns: "1.0.0-rc.3"
-manager.get_current_rc_patch("1.0.0", "patch")  # Returns: "1.0.0-patch.2"
-```
-
----
-
-#### `increment_rc_patch(tag: str, prerelease_tag: str = "rc") -> str | None`
-
-Increment a release candidate or patch prerelease tag.
-
-**Parameters:**
-- `tag` (str): Base production version
-- `prerelease_tag` (str): Prerelease type ("rc" or "patch")
-
-**Returns:**
-- `str | None`: New incremented tag or None
-
-**Raises:**
-- `ValueError`: If tag format is invalid
-- `InvalidTagCreation`: If versioning rules are violated
-
-**Example:**
-```python
-manager.increment_rc_patch("1.0.0")  # Returns: "1.0.0-rc.2"
-manager.increment_rc_patch("1.0.0", "patch")  # Returns: "1.0.0-patch.2"
-```
-
----
-
-#### `create_prod_tag(tag: str) -> str`
-
-Create a production tag from RC or patch prerelease.
-
-**Parameters:**
-- `tag` (str): RC or patch tag to promote
-
-**Returns:**
-- `str`: New production tag
-
-**Raises:**
-- `ValueError`: If tag format is invalid
-
-**Example:**
-```python
-manager.create_prod_tag("1.0.0-rc.3")  # Returns: "1.0.0"
-manager.create_prod_tag("1.0.0-patch.2")  # Returns: "1.0.1"
-```
-
----
-
-#### `find_tag(tag: str) -> bool`
-
-Check if a specific tag exists in the repository.
-
-**Parameters:**
-- `tag` (str): Tag name to search for
-
-**Returns:**
-- `bool`: True if tag exists, False otherwise
-
-**Example:**
-```python
-manager.find_tag("1.0.0-dev.5")  # Returns: True
-```
-
----
-
-#### `find_tag_with_pattern(pattern: str) -> str | None`
-
-Find the highest semantic version tag matching a regex pattern.
-
-**Parameters:**
-- `pattern` (str): Regular expression pattern
-
-**Returns:**
-- `str | None`: Highest matching tag or None
-
-**Example:**
-```python
-pattern = r"^1\.0\.0-dev\.\d+$"
-manager.find_tag_with_pattern(pattern)  # Returns: "1.0.0-dev.9"
-```
-
----
-
-#### `@staticmethod get_init_rc_tag(tag: str) -> str`
-
-Generate initial RC tag from a prerelease tag.
-
-**Parameters:**
-- `tag` (str): Prerelease tag (e.g., "1.0.0-dev.5")
-
-**Returns:**
-- `str`: Corresponding RC tag (e.g., "1.0.0-rc.1")
-
-**Raises:**
-- `ValueError`: If tag format is invalid
-
-**Example:**
-```python
-VersionControlManager.get_init_rc_tag("1.0.0-dev.5")  # Returns: "1.0.0-rc.1"
-```
-
----
-
-### Exception Classes
-
-#### `InvalidTagCreation`
-
-Raised when tag creation violates versioning rules.
-
-**Common scenarios:**
-- Creating RC when production version exists
-- Creating patch when no production version exists
-- Incrementing patch when higher patch exists in production
-
-**Example:**
-```python
-from vcm.exceptions import InvalidTagCreation
-
-try:
-    manager.increment_rc_patch("1.0.0")  # Production 1.0.0 exists
-except InvalidTagCreation as e:
-    print(f"Cannot create tag: {e}")
+vcm create-prod --tag 1.0.0-rc.3
+vcm create-prod --tag 1.0.0-patch.2
+vcm create-prod --tag 1.0.0-rc.3 --detailed
 ```
 
 ---
@@ -1090,84 +782,8 @@ except InvalidTagCreation as e:
 # Run all tests
 python -m pytest -v
 
-# Run with coverage
-python -m pytest --cov=src/vcm --cov-report=html
-
-# Run specific test file
-python -m pytest tests/test_vcm.py -v
-
 # Run specific test
 python -m pytest tests/test_vcm.py::test_current_tag -v
-
-# Run with output
-python -m pytest -v -s
-```
-
-### Test Structure
-
-```
-tests/
-├── __init__.py
-├── test_vcm.py           # VCM integration tests
-├── test_cli.py           # CLI unit tests
-└── conftest.py           # Pytest fixtures
-```
-
-### Writing Tests
-
-Example test for VCM:
-
-```python
-from vcm import VersionControlManager
-import pytest
-
-def test_increment_prerelease():
-    """Test prerelease tag incrementing."""
-    manager = VersionControlManager("test_repo")
-    
-    # Test increment
-    tag = manager.increment_prerelease_tag("1.0.0-dev.1")
-    assert tag == "1.0.0-dev.2"
-    
-    # Test major bump
-    tag = manager.increment_prerelease_tag("1.0.0-dev.1", major_bump=True)
-    assert tag == "2.0.0-dev.1"
-```
-
-Example test for CLI:
-
-```python
-from vcm.cli import handle_get_current_tag, create_parser
-from unittest.mock import patch
-from io import StringIO
-
-def test_cli_get_current_tag():
-    """Test CLI get-current-tag command."""
-    with patch('vcm.cli.VersionControlManager') as mock_vcm:
-        mock_vcm.return_value.get_current_tag.return_value = "1.0.0-dev.1"
-        
-        parser = create_parser()
-        args = parser.parse_args(['get-current-tag'])
-        
-        captured = StringIO()
-        with patch('sys.stdout', captured):
-            result = handle_get_current_tag(args)
-        
-        assert result == 0
-        assert "1.0.0-dev.1" in captured.getvalue()
-```
-
-### Test Coverage
-
-Aim for high test coverage:
-
-```bash
-# Generate coverage report
-python -m pytest --cov=src/vcm --cov-report=term-missing
-
-# Generate HTML coverage report
-python -m pytest --cov=src/vcm --cov-report=html
-open htmlcov/index.html
 ```
 
 ---
@@ -1221,9 +837,9 @@ pip install -e .
 
 #### Problem: `setup.py check` fails
 
-**Solution:** Ensure README.md exists and is valid:
+**Solution:** 
 ```bash
-python setup.py check --restructuredtext --strict
+python setup.py check 
 ```
 
 ---
@@ -1332,6 +948,7 @@ find . -type d -name __pycache__ -exec rm -r {} +
 parser = argparse.ArgumentParser(
     description="Git semantic versioning operations",
     formatter_class=argparse.RawDescriptionHelpFormatter,
+    ...
 )
 ```
 
@@ -1366,11 +983,8 @@ python -m pytest -v
 **Solution:** Use correct import paths:
 ```python
 # Correct
-from vcm import VersionControlManager
-from vcm.cli import handle_get_current_tag
-
-# Incorrect
-from src.vcm import VersionControlManager  # Don't use 'src' in imports
+from src.vcm.vcm import VersionControlManager
+from src.vcm.cli import handle_get_current_tag
 ```
 
 ---
@@ -1413,7 +1027,6 @@ We welcome contributions! Please follow these guidelines:
 2. **Run tests**
    ```bash
    python -m pytest -v
-   python -m pytest --cov=src/vcm
    ```
 
 3. **Format code**
@@ -1465,53 +1078,12 @@ test: add comprehensive CLI tests
 - All new features must include tests
 - Maintain >90% code coverage
 - Tests must pass before merging
-- Include both unit and integration tests
 
 ### Documentation
 
 - Update README.md for user-facing changes
-- Update API documentation for code changes
 - Add examples for new features
 - Keep documentation clear and concise
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License
-
-Copyright (c) 2024 Your Name
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
-
----
-
-## 🙏 Acknowledgments
-
-- [Semantic Versioning](https://semver.org/) specification
-- [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) branching model by Vincent Driessen
-- [GitPython](https://github.com/gitpython-developers/GitPython) library
-- [python-semver](https://github.com/python-semver/python-semver) library
 
 ---
 
@@ -1520,31 +1092,6 @@ SOFTWARE.
 - **Documentation**: [https://0jas.github.io/vcm/](https://0jas.github.io/vcm/)
 - **Issues**: [GitHub Issues](https://github.com/0jas/vcm/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/0jas/vcm/discussions)
-
----
-
-## 🗺️ Roadmap
-
-### Upcoming Features
-
-- [ ] Interactive mode for CLI
-- [ ] Git hooks integration
-- [ ] GitHub Actions workflow templates
-- [ ] Support for monorepo versioning
-- [ ] Version changelog generation
-- [ ] Tag annotation with release notes
-- [ ] Integration with CI/CD platforms
-- [ ] Web-based version dashboard
-- [ ] Automated version bump suggestions
-
-### Version History
-
-#### v1.0.0 (Current)
-- Initial release
-- Core VCM functionality
-- CLI interface
-- Complete test coverage
-- Documentation
 
 ---
 

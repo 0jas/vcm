@@ -1082,215 +1082,6 @@ except InvalidTagCreation as e:
 
 ---
 
-## 🔧 setup.py Configuration
-
-A complete `setup.py` configuration for building and distributing the package:
-
-```python
-from setuptools import setup, find_packages
-import os
-
-# Read long description from README
-def read_long_description():
-    with open("README.md", "r", encoding="utf-8") as fh:
-        return fh.read()
-
-# Read version from package
-def read_version():
-    version_file = os.path.join("src", "vcm", "__version__.py")
-    if os.path.exists(version_file):
-        with open(version_file, "r") as f:
-            for line in f:
-                if line.startswith("__version__"):
-                    return line.split("=")[1].strip().strip('"').strip("'")
-    return "1.0.0"
-
-setup(
-    name='vcm',
-    version=read_version(),
-    
-    # Package information
-    packages=find_packages(where='src'),
-    package_dir={'': 'src'},
-    
-    # Dependencies
-    install_requires=[
-        'GitPython>=3.1.0',
-        'semver>=2.13.0',
-    ],
-    
-    # Optional dependencies for development
-    extras_require={
-        'dev': [
-            'pytest>=7.0.0',
-            'pytest-cov>=3.0.0',
-            'black>=22.0.0',
-            'flake8>=4.0.0',
-            'mypy>=0.950',
-        ],
-        'docs': [
-            'sphinx>=4.5.0',
-            'sphinx-rtd-theme>=1.0.0',
-        ],
-    },
-    
-    # CLI entry point
-    entry_points={
-        'console_scripts': [
-            'vcm=vcm.cli:main',
-        ],
-    },
-    
-    # Metadata
-    author='Your Name',
-    author_email='your.email@example.com',
-    description='Git semantic versioning manager following SemVer and Gitflow',
-    long_description=read_long_description(),
-    long_description_content_type='text/markdown',
-    url='https://github.com/yourusername/vcm',
-    project_urls={
-        'Documentation': 'https://0jas.github.io/vcm/',
-        'Source': 'https://github.com/yourusername/vcm',
-        'Tracker': 'https://github.com/yourusername/vcm/issues',
-    },
-    
-    # Classifiers for PyPI
-    classifiers=[
-        'Development Status :: 4 - Beta',
-        'Intended Audience :: Developers',
-        'Topic :: Software Development :: Version Control',
-        'Topic :: Software Development :: Version Control :: Git',
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
-        'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: 3.11',
-        'Operating System :: OS Independent',
-    ],
-    
-    # Python version requirement
-    python_requires='>=3.7',
-    
-    # Include additional files
-    include_package_data=True,
-    
-    # Keywords for PyPI search
-    keywords='git versioning semver semantic-versioning gitflow tags release-management',
-    
-    # License
-    license='MIT',
-    
-    # Zip safe
-    zip_safe=False,
-)
-```
-
-### Additional Configuration Files
-
-#### `MANIFEST.in`
-
-Include additional files in source distribution:
-
-```
-include README.md
-include LICENSE
-include requirements.txt
-recursive-include src/vcm *.py
-recursive-include tests *.py
-recursive-include docs *.md *.rst
-```
-
-#### `pyproject.toml`
-
-Modern Python packaging configuration:
-
-```toml
-[build-system]
-requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
-build-backend = "setuptools.build_meta"
-
-[project]
-name = "vcm"
-dynamic = ["version"]
-description = "Git semantic versioning manager"
-readme = "README.md"
-requires-python = ">=3.7"
-license = {text = "MIT"}
-authors = [
-    {name = "Your Name", email = "your.email@example.com"}
-]
-keywords = ["git", "versioning", "semver", "gitflow"]
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
-]
-
-dependencies = [
-    "GitPython>=3.1.0",
-    "semver>=2.13.0",
-]
-
-[project.optional-dependencies]
-dev = [
-    "pytest>=7.0.0",
-    "pytest-cov>=3.0.0",
-    "black>=22.0.0",
-    "flake8>=4.0.0",
-]
-
-[project.scripts]
-vcm = "vcm.cli:main"
-
-[project.urls]
-Homepage = "https://github.com/yourusername/vcm"
-Documentation = "https://0jas.github.io/vcm/"
-Repository = "https://github.com/yourusername/vcm"
-```
-
-#### `.gitignore`
-
-Ignore build and distribution files:
-
-```
-# Distribution / packaging
-build/
-dist/
-*.egg-info/
-*.egg
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Virtual environments
-venv/
-env/
-ENV/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-```
-
----
-
 ## 🧪 Tests
 
 ### Running Tests
@@ -1592,7 +1383,7 @@ We welcome contributions! Please follow these guidelines:
 
 1. **Fork the repository**
    ```bash
-   git clone https://github.com/yourusername/vcm.git
+   git clone https://github.com/0jas/vcm.git
    cd vcm
    ```
 
@@ -1727,8 +1518,8 @@ SOFTWARE.
 ## 📞 Support
 
 - **Documentation**: [https://0jas.github.io/vcm/](https://0jas.github.io/vcm/)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/vcm/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/vcm/discussions)
+- **Issues**: [GitHub Issues](https://github.com/0jas/vcm/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/0jas/vcm/discussions)
 
 ---
 
@@ -1759,10 +1550,10 @@ SOFTWARE.
 
 ## 📊 Project Stats
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/vcm?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/vcm?style=social)
-![GitHub issues](https://img.shields.io/github/issues/yourusername/vcm)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/yourusername/vcm)
+![GitHub stars](https://img.shields.io/github/stars/0jas/vcm?style=social)
+![GitHub forks](https://img.shields.io/github/forks/0jas/vcm?style=social)
+![GitHub issues](https://img.shields.io/github/issues/0jas/vcm)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/0jas/vcm)
 
 ---
 

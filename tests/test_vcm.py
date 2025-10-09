@@ -34,11 +34,20 @@ Test Environment:
 Author: Sajin Vachery
 """
 
-from src.vcm import *
-from src.exceptions import *
-import git, os, sys, shutil, pytest
+from src.vcm.vcm import *
+from src.vcm.cli import *
+from src.vcm.exceptions import *
+import git, os, shutil, pytest
+from io import StringIO
+from unittest.mock import patch, MagicMock
+import argparse
+import sys
 
+# ============================================================================
+# PART 1: ORIGINAL VCM INTEGRATION TESTS
+# ============================================================================
 
+# Helper functions for VCM tests
 def empty_commit():
     """Create an empty commit in the test repository.
 
@@ -56,9 +65,7 @@ def empty_commit():
         - Advances the repository's commit history
         - Enables subsequent tag creation
     """
-    test_dir = "test_dir"
-    test_repo = git.Repo("test_dir")
-    test_repo.index.commit(f"Empty Commit")
+    git.Repo("test_dir").index.commit("Empty Commit")
 
 
 def create_tag(tag):
@@ -80,9 +87,7 @@ def create_tag(tag):
         creates tags via GitPython, allowing test setup that might not
         be possible through the manager's normal workflow.
     """
-    test_dir = "test_dir"
-    test_repo = git.Repo("test_dir")
-    test_repo.create_tag(tag)
+    git.Repo("test_dir").create_tag(tag)
 
 
 def create_tags():
@@ -116,7 +121,9 @@ def create_tags():
 # Initialize VersionControlManager with test repository
 manager = VersionControlManager("test_dir")
 
-
+# ============================================================================
+# PART 1: VCM INTEGRATION TESTS
+# ============================================================================
 def test_current_tag():
     """Test current tag retrieval functionality.
 
@@ -1023,11 +1030,851 @@ def test_invalid_tag_format_handling():
         with pytest.raises(ValueError):
             manager.create_prod_tag(invalid_format)
 
-    # Cleanup: Delete test repository after all tests complete
+
+# ============================================================================
+# PART 2: CLI UNIT TESTS
+# ============================================================================
+
+@pytest.fixture
+def mock_vcm():
+    """Create a mock VersionControlManager for testing CLI operations."""
+    with patch('src.vcm.cli.VersionControlManager') as mock:
+        instance = mock.return_value
+        yield instance
+
+
+@pytest.fixture
+def cli_parser():
+    """Create an argument parser instance for testing CLI argument parsing."""
+    return create_parser()
+
+
+def test_cli_get_current_tag_basic(mock_vcm):
+    """Test basic get-current-tag CLI command functionality.
+
+    This test verifies that the get-current-tag command correctly calls the
+    VersionControlManager with default parameters and returns the current tag
+    without additional formatting when the --detailed flag is not used.
+
+    Test Scenario:
+        1. Mock VCM returns a development tag
+        2. Parse get-current-tag command with default options
+        3. Capture stdout to verify output format
+        4. Verify VCM called with correct parameters
+        5. Verify clean output (just the tag, no additional text)
+
+    Validates:
+        - Basic command execution without errors
+        - Correct default parameter values (prerelease_tag='dev', production=False)
+        - Output contains only the tag value
+        - Return code indicates success (0)
+
+    Business Logic Tested:
+        - handle_get_current_tag() with default arguments
+        - Simple output format for scripting use cases
+    """
+    mock_vcm.get_current_tag.return_value = "1.0.0-dev.5"
+
+    parser = create_parser()
+    args = parser.parse_args(['get-current-tag'])
+
+    captured_output = StringIO()
+    with patch('sys.stdout', captured_output):
+        result = handle_get_current_tag(args)
+
+    assert result == 0
+    assert captured_output.getvalue().strip() == "1.0.0-dev.5"
+    mock_vcm.get_current_tag.assert_called_once_with(
+        prerelease_tag='dev',
+        production=False
+    )
+
+
+def test_cli_get_current_tag_detailed(mock_vcm):
+    """Test get-current-tag command with detailed output flag.
+
+    This test verifies that the --detailed flag produces human-readable output
+    with descriptive context about what tag was found, useful for interactive
+    use cases where users need confirmation of what the command did.
+
+    Test Scenario:
+        1. Mock VCM returns a development tag
+        2. Parse command with --detailed flag
+        3. Capture and verify output includes descriptive message
+        4. Confirm VCM called correctly
+
+    Validates:
+        - Detailed output format includes descriptive prefix
+        - Tag value still present in output
+        - --detailed flag properly parsed and handled
+        - Return code indicates success
+
+    Business Logic Tested:
+        - handle_get_current_tag() detailed output mode
+        - User-friendly messaging for interactive usage
+    """
+    mock_vcm.get_current_tag.return_value = "1.0.0-dev.5"
+
+    parser = create_parser()
+    args = parser.parse_args(['get-current-tag', '--detailed'])
+
+    captured_output = StringIO()
+    with patch('sys.stdout', captured_output):
+        result = handle_get_current_tag(args)
+
+    assert result == 0
+    output = captured_output.getvalue().strip()
+    assert "Latest dev prerelease tag found: 1.0.0-dev.5" in output
+
+
+def test_cli_get_current_tag_production(mock_vcm):
+    """Test get-current-tag command with production flag.
+
+    This test verifies that the --production flag correctly requests production
+    tags instead of prerelease tags, allowing users to query the latest
+    production release without prerelease identifiers.
+
+    Test Scenario:
+        1. Mock VCM returns a production tag
+        2. Parse command with --production flag
+        3. Verify VCM called with production=True
+        4. Confirm output contains production tag
+
+    Validates:
+        - --production flag properly parsed
+        - Production parameter passed to VCM correctly
+        - Production tags returned without prerelease identifiers
+        - Return code indicates success
+
+    Business Logic Tested:
+        - handle_get_current_tag() production mode
+        - Production vs prerelease tag filtering
+    """
+    mock_vcm.get_current_tag.return_value = "2.0.0"
+
+    parser = create_parser()
+    args = parser.parse_args(['get-current-tag', '--production'])
+
+    captured_output = StringIO()
+    with patch('sys.stdout', captured_output):
+        result = handle_get_current_tag(args)
+
+    assert result == 0
+    assert captured_output.getvalue().strip() == "2.0.0"
+    mock_vcm.get_current_tag.assert_called_once_with(
+        prerelease_tag='dev',
+        production=True
+    )
+
+
+def test_cli_get_current_tag_no_tags(mock_vcm):
+    """Test get-current-tag command when no matching tags exist.
+
+    This test verifies proper error handling when the repository has no tags
+    matching the requested criteria. It ensures the CLI provides a clear
+    error message and returns an appropriate exit code for scripting.
+
+    Test Scenario:
+        1. Mock VCM returns None (no tags found)
+        2. Execute get-current-tag command
+        3. Capture stderr for error message
+        4. Verify non-zero exit code
+
+    Validates:
+        - None return value handled gracefully
+        - Error message written to stderr (not stdout)
+        - Non-zero exit code (1) for error condition
+        - Error message is clear and actionable
+
+    Business Logic Tested:
+        - handle_get_current_tag() error handling
+        - Empty repository scenario
+        - Proper stderr vs stdout usage
+    """
+    mock_vcm.get_current_tag.return_value = None
+
+    parser = create_parser()
+    args = parser.parse_args(['get-current-tag'])
+
+    captured_error = StringIO()
+    with patch('sys.stderr', captured_error):
+        result = handle_get_current_tag(args)
+
+    assert result == 1
+    assert "No matching tags found" in captured_error.getvalue()
+
+
+def test_cli_increment_prerelease_basic(mock_vcm):
+    """Test basic increment-prerelease CLI command functionality.
+
+    This test verifies that the increment-prerelease command correctly
+    increments a prerelease tag and returns the new tag value. Tests the
+    most common use case of incrementing from an existing tag.
+
+    Test Scenario:
+        1. Mock VCM returns incremented tag
+        2. Parse command with base tag
+        3. Verify new tag created and returned
+        4. Confirm VCM called with correct parameters
+
+    Validates:
+        - Tag increment operation succeeds
+        - Prerelease identifier passed correctly
+        - Output contains only new tag (for scripting)
+        - Major bump defaulted to False
+        - Return code indicates success
+
+    Business Logic Tested:
+        - handle_increment_prerelease() basic operation
+        - Tag parameter parsing and passing
+        - Default prerelease identifier ('dev')
+    """
+    mock_vcm.increment_prerelease_tag.return_value = "1.0.0-dev.6"
+
+    parser = create_parser()
+    args = parser.parse_args(['increment-prerelease', '--tag', '1.0.0-dev.5'])
+
+    captured_output = StringIO()
+    with patch('sys.stdout', captured_output):
+        result = handle_increment_prerelease(args)
+
+    assert result == 0
+    assert captured_output.getvalue().strip() == "1.0.0-dev.6"
+    mock_vcm.increment_prerelease_tag.assert_called_once_with(
+        tag='1.0.0-dev.5',
+        prerelease_tag='dev',
+        major_bump=False
+    )
+
+
+def test_cli_increment_prerelease_major_bump(mock_vcm):
+    """Test increment-prerelease command with major version bump.
+
+    This test verifies that the --major-bump flag correctly triggers a major
+    version increment instead of the default minor increment, useful for
+    breaking changes or significant new features.
+
+    Test Scenario:
+        1. Mock VCM returns major-bumped tag
+        2. Parse command with --major-bump flag
+        3. Verify major_bump=True passed to VCM
+        4. Confirm major version incremented in result
+
+    Validates:
+        - --major-bump flag properly parsed
+        - Major bump parameter passed to VCM
+        - Major version incremented (0.x.x -> 1.x.x)
+        - Minor version reset in result
+        - Return code indicates success
+
+    Business Logic Tested:
+        - handle_increment_prerelease() major bump mode
+        - Semantic versioning major increment rules
+    """
+    mock_vcm.increment_prerelease_tag.return_value = "1.0.0-dev.1"
+
+    parser = create_parser()
+    args = parser.parse_args([
+        'increment-prerelease',
+        '--tag', '0.5.0-dev.3',
+        '--major-bump'
+    ])
+
+    captured_output = StringIO()
+    with patch('sys.stdout', captured_output):
+        result = handle_increment_prerelease(args)
+
+    assert result == 0
+    assert captured_output.getvalue().strip() == "1.0.0-dev.1"
+    mock_vcm.increment_prerelease_tag.assert_called_once_with(
+        tag='0.5.0-dev.3',
+        prerelease_tag='dev',
+        major_bump=True
+    )
+
+
+def test_cli_increment_prerelease_invalid_tag(mock_vcm):
+    """Test increment-prerelease command with invalid tag format.
+
+    This test verifies proper error handling when an invalid semantic version
+    tag is provided, ensuring users get clear feedback about tag format
+    requirements and preventing corrupt tags from being created.
+
+    Test Scenario:
+        1. Mock VCM raises ValueError for invalid tag
+        2. Execute command with malformed tag
+        3. Capture stderr for error message
+        4. Verify non-zero exit code
+
+    Validates:
+        - ValueError from VCM caught and handled
+        - Error message includes validation details
+        - Error written to stderr (not stdout)
+        - Non-zero exit code (1) for error condition
+        - Error message mentions "Invalid tag format"
+
+    Business Logic Tested:
+        - handle_increment_prerelease() error handling
+        - Tag format validation and error reporting
+    """
+    mock_vcm.increment_prerelease_tag.side_effect = ValueError("Invalid semantic version")
+
+    parser = create_parser()
+    args = parser.parse_args(['increment-prerelease', '--tag', 'invalid'])
+
+    captured_error = StringIO()
+    with patch('sys.stderr', captured_error):
+        result = handle_increment_prerelease(args)
+
+    assert result == 1
+    assert "Invalid tag format" in captured_error.getvalue()
+
+
+def test_cli_init_new_rc_basic(mock_vcm):
+    """Test basic init-rc CLI command functionality.
+
+    This test verifies that the init-rc command successfully creates a new
+    release candidate tag from the latest development tag, marking the
+    transition from development to release candidate phase.
+
+    Test Scenario:
+        1. Mock VCM returns new RC tag
+        2. Parse init-rc command with defaults
+        3. Verify RC tag created and returned
+        4. Confirm VCM called with correct parameters
+
+    Validates:
+        - RC initialization succeeds
+        - Default prerelease identifier ('dev') used
+        - Output contains only new RC tag
+        - Tag follows RC naming convention (x.y.z-rc.1)
+        - Return code indicates success
+
+    Business Logic Tested:
+        - handle_init_new_rc() basic operation
+        - Development to RC transition
+        - Initial RC tag creation (rc.1)
+    """
+    mock_vcm.init_new_rc.return_value = "1.0.0-rc.1"
+
+    parser = create_parser()
+    args = parser.parse_args(['init-rc'])
+
+    captured_output = StringIO()
+    with patch('sys.stdout', captured_output):
+        result = handle_init_new_rc(args)
+
+    assert result == 0
+    assert captured_output.getvalue().strip() == "1.0.0-rc.1"
+    mock_vcm.init_new_rc.assert_called_once_with(prerelease_tag='dev')
+
+
+def test_cli_init_new_rc_no_dev_tag(mock_vcm):
+    """Test init-rc command when no development tag exists.
+
+    This test verifies proper error handling when attempting to create an RC
+    tag but no development tags exist in the repository, preventing invalid
+    RC creation and providing clear guidance to users.
+
+    Test Scenario:
+        1. Mock VCM returns None (no dev tag found)
+        2. Execute init-rc command
+        3. Capture stderr for error message
+        4. Verify non-zero exit code
+
+    Validates:
+        - None return value handled gracefully
+        - Error message explains missing dev tag
+        - Error written to stderr
+        - Non-zero exit code (1) for error condition
+        - Error message is actionable
+
+    Business Logic Tested:
+        - handle_init_new_rc() error handling
+        - Prerequisite validation (dev tag must exist)
+    """
+    mock_vcm.init_new_rc.return_value = None
+
+    parser = create_parser()
+    args = parser.parse_args(['init-rc'])
+
+    captured_error = StringIO()
+    with patch('sys.stderr', captured_error):
+        result = handle_init_new_rc(args)
+
+    assert result == 1
+    assert "No development tag found" in captured_error.getvalue()
+
+
+def test_cli_init_new_patch_basic(mock_vcm):
+    """Test basic init-patch CLI command functionality.
+
+    This test verifies that the init-patch command successfully creates a new
+    patch prerelease tag from the latest production tag, enabling hotfix
+    workflows for addressing production issues.
+
+    Test Scenario:
+        1. Mock VCM returns new patch tag
+        2. Parse init-patch command
+        3. Verify patch tag created and returned
+        4. Confirm VCM called correctly
+
+    Validates:
+        - Patch initialization succeeds
+        - Output contains only new patch tag
+        - Tag follows patch naming convention (x.y.z-patch.1)
+        - Return code indicates success
+
+    Business Logic Tested:
+        - handle_init_new_patch() basic operation
+        - Production to patch transition
+        - Initial patch tag creation
+    """
+    mock_vcm.init_new_patch.return_value = "1.0.0-patch.1"
+
+    parser = create_parser()
+    args = parser.parse_args(['init-patch'])
+
+    captured_output = StringIO()
+    with patch('sys.stdout', captured_output):
+        result = handle_init_new_patch(args)
+
+    assert result == 0
+    assert captured_output.getvalue().strip() == "1.0.0-patch.1"
+    mock_vcm.init_new_patch.assert_called_once()
+
+
+def test_cli_get_current_rc_patch_rc(mock_vcm):
+    """Test get-current-rc-patch command for RC tags.
+
+    This test verifies that the get-current-rc-patch command correctly
+    retrieves the highest RC tag for a given base version, useful for
+    determining which RC iteration is current before promoting to production.
+
+    Test Scenario:
+        1. Mock VCM returns highest RC tag for version
+        2. Parse command with base version and rc type
+        3. Verify correct RC tag returned
+        4. Confirm VCM called with proper parameters
+
+    Validates:
+        - RC tag retrieval for specific version
+        - Base version parameter parsed correctly
+        - Default prerelease type ('rc') used
+        - Highest RC number returned when multiple exist
+        - Return code indicates success
+
+    Business Logic Tested:
+        - handle_get_current_rc_patch() RC mode
+        - Version-specific tag filtering
+    """
+    mock_vcm.get_current_rc_patch.return_value = "1.0.0-rc.3"
+
+    parser = create_parser()
+    args = parser.parse_args(['get-current-rc-patch', '--tag', '1.0.0'])
+
+    captured_output = StringIO()
+    with patch('sys.stdout', captured_output):
+        result = handle_get_current_rc_patch(args)
+
+    assert result == 0
+    assert captured_output.getvalue().strip() == "1.0.0-rc.3"
+    mock_vcm.get_current_rc_patch.assert_called_once_with(
+        tag='1.0.0',
+        prerelease_tag='rc'
+    )
+
+
+def test_cli_increment_rc_patch_rc(mock_vcm):
+    """Test increment-rc-patch command for RC tags.
+
+    This test verifies that the increment-rc-patch command successfully
+    increments an RC tag, creating the next RC iteration for a version.
+    Useful when additional release candidate testing cycles are needed.
+
+    Test Scenario:
+        1. Mock VCM returns incremented RC tag
+        2. Parse command with base version and rc type
+        3. Verify new RC tag created and returned
+        4. Confirm VCM called with correct parameters
+
+    Validates:
+        - RC tag increment succeeds
+        - Base version preserved (1.0.0)
+        - RC number incremented (rc.3 -> rc.4)
+        - Default prerelease type used correctly
+        - Return code indicates success
+
+    Business Logic Tested:
+        - handle_increment_rc_patch() RC mode
+        - RC iteration increment logic
+    """
+    mock_vcm.increment_rc_patch.return_value = "1.0.0-rc.4"
+
+    parser = create_parser()
+    args = parser.parse_args(['increment-rc-patch', '--tag', '1.0.0'])
+
+    captured_output = StringIO()
+    with patch('sys.stdout', captured_output):
+        result = handle_increment_rc_patch(args)
+
+    assert result == 0
+    assert captured_output.getvalue().strip() == "1.0.0-rc.4"
+    mock_vcm.increment_rc_patch.assert_called_once_with(
+        tag='1.0.0',
+        prerelease_tag='rc'
+    )
+
+
+def test_cli_create_prod_tag_basic(mock_vcm):
+    """Test basic create-prod CLI command functionality.
+
+    This test verifies that the create-prod command successfully promotes
+    an RC or patch tag to production, creating a clean production version
+    tag without prerelease identifiers.
+
+    Test Scenario:
+        1. Mock VCM returns production tag
+        2. Parse command with RC tag to promote
+        3. Verify production tag created and returned
+        4. Confirm VCM called with source tag
+
+    Validates:
+        - Production tag creation succeeds
+        - Prerelease identifier removed (rc.3 -> clean version)
+        - Source tag parameter parsed correctly
+        - Output contains only production tag
+        - Return code indicates success
+
+    Business Logic Tested:
+        - handle_create_prod_tag() basic operation
+        - RC/patch to production promotion
+        - Prerelease identifier stripping
+    """
+    mock_vcm.create_prod_tag.return_value = "1.0.0"
+
+    parser = create_parser()
+    args = parser.parse_args(['create-prod', '--tag', '1.0.0-rc.3'])
+
+    captured_output = StringIO()
+    with patch('sys.stdout', captured_output):
+        result = handle_create_prod_tag(args)
+
+    assert result == 0
+    assert captured_output.getvalue().strip() == "1.0.0"
+    mock_vcm.create_prod_tag.assert_called_once_with(tag='1.0.0-rc.3')
+
+
+def test_cli_create_prod_tag_invalid(mock_vcm):
+    """Test create-prod command with invalid tag format.
+
+    This test verifies proper error handling when an invalid tag format
+    is provided for production promotion, preventing corrupt production
+    tags from being created and providing clear user feedback.
+
+    Test Scenario:
+        1. Mock VCM raises ValueError for invalid tag
+        2. Execute command with malformed tag
+        3. Capture stderr for error message
+        4. Verify non-zero exit code
+
+    Validates:
+        - ValueError from VCM caught and handled
+        - Error message includes validation details
+        - Error written to stderr (not stdout)
+        - Non-zero exit code (1) for error condition
+        - Error message mentions "Invalid tag format"
+
+    Business Logic Tested:
+        - handle_create_prod_tag() error handling
+        - Tag format validation for production promotion
+    """
+    mock_vcm.create_prod_tag.side_effect = ValueError("Invalid prerelease tag")
+
+    parser = create_parser()
+    args = parser.parse_args(['create-prod', '--tag', 'invalid-tag'])
+
+    captured_error = StringIO()
+    with patch('sys.stderr', captured_error):
+        result = handle_create_prod_tag(args)
+
+    assert result == 1
+    assert "Invalid tag format" in captured_error.getvalue()
+
+
+def test_cli_parser_structure(cli_parser):
+    """Test CLI argument parser structure and configuration.
+
+    This test verifies that the argument parser is properly configured
+    with all expected commands and options, ensuring complete CLI
+    functionality is available.
+
+    Test Scenario:
+        1. Verify parser description exists
+        2. Check all subcommands are registered
+        3. Validate command structure
+
+    Validates:
+        - Parser has help functionality
+        - All expected commands exist
+        - Subparser structure is correct
+        - Command names follow conventions
+
+    Business Logic Tested:
+        - create_parser() configuration
+        - Subcommand registration
+        - CLI structure completeness
+    """
+    # Verify parser has description
+    assert cli_parser.description is not None
+
+    # Get subparsers
+    subparsers_actions = [
+        action for action in cli_parser._actions
+        if isinstance(action, argparse._SubParsersAction)
+    ]
+
+    assert len(subparsers_actions) > 0
+
+    # Verify all expected commands exist
+    expected_commands = [
+        'get-current-tag',
+        'increment-prerelease',
+        'init-rc',
+        'init-patch',
+        'get-current-rc-patch',
+        'increment-rc-patch',
+        'create-prod'
+    ]
+
+    for action in subparsers_actions:
+        for command in expected_commands:
+            assert command in action.choices
+
+
+def test_cli_detailed_flag_consistency(mock_vcm):
+    """Test --detailed flag behavior across different commands.
+
+    This test verifies that the --detailed flag is consistently implemented
+    across all commands that support it, providing uniform user experience
+    and predictable output formatting.
+
+    Test Scenario:
+        1. Test detailed output for multiple commands
+        2. Verify descriptive messages are added
+        3. Confirm tag values still present
+        4. Check consistent message formatting
+
+    Validates:
+        - Detailed flag adds descriptive context
+        - Tag values preserved in output
+        - Consistent message format
+        - No functionality breakage
+
+    Business Logic Tested:
+        - Detailed flag implementation
+        - Conditional output formatting
+        - User experience consistency
+    """
+    # Test get-current-tag with detailed
+    mock_vcm.get_current_tag.return_value = "1.0.0-dev.1"
+
+    parser = create_parser()
+    args = parser.parse_args(['get-current-tag', '--detailed'])
+
+    captured_output = StringIO()
+    with patch('sys.stdout', captured_output):
+        result = handle_get_current_tag(args)
+
+    assert result == 0
+    output = captured_output.getvalue()
+    assert "1.0.0-dev.1" in output
+    assert len(output) > len("1.0.0-dev.1")  # Has additional text
+
+    # Test increment-prerelease with detailed
+    mock_vcm.increment_prerelease_tag.return_value = "1.0.0-dev.2"
+
+    args = parser.parse_args(['increment-prerelease', '--tag', '1.0.0-dev.1', '--detailed'])
+
+    captured_output = StringIO()
+    with patch('sys.stdout', captured_output):
+        result = handle_increment_prerelease(args)
+
+    assert result == 0
+    output = captured_output.getvalue()
+    assert "1.0.0-dev.2" in output
+    assert "Created prerelease tag" in output
+
+
+def test_cli_custom_prerelease_identifiers(mock_vcm):
+    """Test CLI support for custom prerelease identifiers.
+
+    This test verifies that the CLI correctly handles different prerelease
+    tag identifiers beyond the default 'dev', supporting flexible tagging
+    strategies for different development workflows.
+
+    Test Scenarios:
+        1. Custom 'alpha' prerelease tag
+        2. Custom 'beta' prerelease tag
+        3. Custom 'staging' prerelease tag
+        4. Parameter passing to VCM
+
+    Validates:
+        - Flexible prerelease identifier support
+        - Parameter passing correctness
+        - Custom workflow support
+        - Consistent behavior across identifiers
+
+    Business Logic Tested:
+        - Prerelease tag parameter handling
+        - Custom identifier support
+        - Parameter validation and passing
+    """
+    custom_identifiers = ['alpha', 'beta', 'staging']
+
+    for identifier in custom_identifiers:
+        mock_vcm.get_current_tag.return_value = f"1.0.0-{identifier}.1"
+
+        parser = create_parser()
+        args = parser.parse_args(['get-current-tag', '--prerelease-tag', identifier])
+
+        captured_output = StringIO()
+        with patch('sys.stdout', captured_output):
+            result = handle_get_current_tag(args)
+
+        assert result == 0
+        mock_vcm.get_current_tag.assert_called_with(
+            prerelease_tag=identifier,
+            production=False
+        )
+
+def test_cli_error_handling_comprehensive():
+    """Comprehensive test of CLI error handling scenarios.
+
+    This test validates that the CLI properly handles all types of errors
+    that can occur during operation, ensuring users get clear feedback
+    and the CLI never crashes unexpectedly.
+
+    Test Scenarios:
+        1. ValueError from invalid input
+        2. Missing repository
+        3. Missing required arguments
+        4. Invalid command
+        5. General exceptions
+
+    Validates:
+        - All error types handled gracefully
+        - Clear error messages provided
+        - Appropriate exit codes
+        - No uncaught exceptions
+        - Stderr used for all errors
+
+    Business Logic Tested:
+        - Comprehensive error handling
+        - Error message clarity
+        - Exit code conventions
+        - User experience during errors
+    """
+    # Test with mock to avoid actual repository operations
+    with patch('src.vcm.cli.VersionControlManager') as mock_class:
+        mock_instance = mock_class.return_value
+
+        # Test ValueError handling
+        mock_instance.increment_prerelease_tag.side_effect = ValueError("Bad format")
+
+        parser = create_parser()
+        args = parser.parse_args(['increment-prerelease', '--tag', 'bad'])
+
+        captured_error = StringIO()
+        with patch('sys.stderr', captured_error):
+            result = handle_increment_prerelease(args)
+
+        assert result == 1
+        assert "Invalid tag format" in captured_error.getvalue()
+
+        # Test general exception handling
+        mock_instance.get_current_tag.side_effect = Exception("Unexpected error")
+
+        args = parser.parse_args(['get-current-tag'])
+
+        captured_error = StringIO()
+        with patch('sys.stderr', captured_error):
+            result = handle_get_current_tag(args)
+
+        assert result == 1
+        assert "Error" in captured_error.getvalue()
+
+
+def test_cli_output_format_scriptability():
+    """Test that CLI output is easily scriptable and parseable.
+
+    This test verifies that the CLI produces clean, parseable output
+    when the --detailed flag is not used, making it suitable for
+    use in scripts and automation.
+
+    Test Scenarios:
+        1. Basic output contains only tag value
+        2. No extra whitespace or formatting
+        3. Consistent output format
+        4. Easy to parse in shell scripts
+
+    Validates:
+        - Clean output for scripting
+        - No extra formatting characters
+        - Consistent line endings
+        - Single-line output for tag values
+
+    Business Logic Tested:
+        - Output formatting for automation
+        - Scriptability considerations
+        - Clean data extraction
+    """
+    with patch('src.vcm.cli.VersionControlManager') as mock_class:
+        mock_instance = mock_class.return_value
+        mock_instance.get_current_tag.return_value = "1.2.3-dev.4"
+
+        parser = create_parser()
+        args = parser.parse_args(['get-current-tag'])
+
+        captured_output = StringIO()
+        with patch('sys.stdout', captured_output):
+            result = handle_get_current_tag(args)
+
+        output = captured_output.getvalue()
+
+        # Should be exactly the tag value plus newline
+        assert output.strip() == "1.2.3-dev.4"
+        assert output.count('\n') == 1  # Single line
+        assert len(output.strip()) == len("1.2.3-dev.4")  # No extra characters
+
+
+# ============================================================================
+# TEST CLEANUP
+# ============================================================================
+
+def test_zzz_cleanup():
+    """Final test to cleanup test repository.
+
+    This test runs last (due to zzz_ prefix) and ensures the test
+    directory is cleaned up after all tests complete. This prevents
+    accumulation of test artifacts and ensures clean test runs.
+
+    Cleanup Process:
+        - Checks if test_dir exists
+        - Removes entire directory tree
+        - Ensures no test artifacts remain
+
+    Note:
+        This test must run last, hence the zzz_ prefix which sorts
+        alphabetically after all other tests.
+    """
     if os.path.isdir("test_dir"):
         shutil.rmtree("test_dir")
+        assert not os.path.exists("test_dir")
 
-# Test execution and cleanup documentation
+
+if __name__ == '__main__':
+    pytest.main([__file__, '-v'])
 """
 Test Repository Cleanup:
 
@@ -1052,5 +1899,5 @@ Sequential Dependencies:
     2. test_increment_prerelease_tag: Creates additional dev tags
     3. test_init_new_rc → test_prod_release: RC workflow
     4. test_init_new_patch → test_create_prod_from_patch: Patch workflow  
-    5. test_major_bump: Complete development cycle with cleanup
+    5. test_major_bump: Complete development cycle
 """

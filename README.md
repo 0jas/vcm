@@ -41,7 +41,7 @@ python -m pytest -v
 ## 📌 Usage
 
 ```python
-from src.vcm import *
+from src import *
 
 # Initialize with repo path
 manager = VersionControlManager("/path/to/your/repo")

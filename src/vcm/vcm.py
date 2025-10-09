@@ -1,4 +1,4 @@
-from git import Repo
+from git import Repo, InvalidGitRepositoryError
 from .exceptions import *
 import re, semver, os
 
@@ -12,7 +12,7 @@ class VersionControlManager:
     Attributes:
         repo (Repo): The GitPython repository object for the managed repository.
     """
-    def __init__(self, repo_path: str):
+    def __init__(self, repo_path: str= "."):
         """Initialize the VersionControlManager with a repository path.
 
         If the repository doesn't exist at the given path, it will be created
@@ -21,12 +21,16 @@ class VersionControlManager:
         Args:
             repo_path (str): The file system path to the Git repository.
         """
-        if not os.path.isdir(repo_path):
-            os.mkdir(repo_path)
+        try:
+            if not os.path.isdir(repo_path):
+                os.mkdir(repo_path)
+                self.repo = Repo.init(repo_path)
+                self.repo.index.commit("First Commit on an empty Repo!")
+            else:
+                self.repo = Repo(repo_path)
+        except InvalidGitRepositoryError:
             self.repo = Repo.init(repo_path)
-        else:
-            self.repo = Repo(repo_path)
-
+            self.repo.index.commit("First Commit on an empty Repo!")
 
     @staticmethod
     def get_init_rc_tag(tag: str):
@@ -120,6 +124,7 @@ class VersionControlManager:
             tag (str, optional): Base tag to increment from. If None, starts with "0.1.0-dev.1".
             prerelease_tag (str, optional): The prerelease identifier. Defaults to "dev".
             major_bump (bool, optional): If True, performs a major version bump instead of minor.
+                                        Only if "rc" version of the current tag exists.
                                        Defaults to False.
 
         Returns:
@@ -132,11 +137,16 @@ class VersionControlManager:
         if tag:
             if not re.fullmatch(pattern,tag):
                 raise ValueError
+        else:
+            tag = self.get_current_tag(prerelease_tag=prerelease_tag)
+
+        if tag:
+            pr_tag = re.match(pattern,tag).group(4)
             if self.find_tag(self.get_init_rc_tag(tag)):
                 if major_bump:
-                    next_tag = f"{semver.VersionInfo.parse(tag).bump_major()}-{prerelease_tag}.1"
+                    next_tag = f"{semver.VersionInfo.parse(tag).bump_major()}-{pr_tag}.1"
                 else:
-                    next_tag = f"{semver.VersionInfo.parse(tag).bump_minor()}-{prerelease_tag}.1"
+                    next_tag = f"{semver.VersionInfo.parse(tag).bump_minor()}-{pr_tag}.1"
             else:
                 next_tag = semver.VersionInfo.parse(tag).bump_prerelease()
         else:

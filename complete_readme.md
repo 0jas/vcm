@@ -3,11 +3,11 @@
 A Python library and CLI tool to manage Git tags following **Semantic Versioning (SemVer)** and **Gitflow branching model**.  
 It provides utilities to create, increment, and validate **development**, **release candidate (RC)**, **patch**, and **production** tags.
 
-[//]: # ([![Python Version]&#40;https://img.shields.io/badge/python-3.7+-blue.svg&#41;]&#40;https://www.python.org/downloads/&#41;)
+[![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 
-[//]: # ([![License]&#40;https://img.shields.io/badge/license-MIT-green.svg&#41;]&#40;LICENSE&#41;)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-[//]: # ([![Tests]&#40;https://img.shields.io/badge/tests-passing-brightgreen.svg&#41;]&#40;tests/&#41;)
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](tests/)
 
 ---
 
